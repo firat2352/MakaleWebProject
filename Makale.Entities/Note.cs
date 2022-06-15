@@ -12,6 +12,7 @@ namespace Makale.Entities
         public string Text { get; set; }
         public bool IsDraft{ get; set; }
         public bool LikeCount{ get; set; }
+        public int CategoryId{ get; set; }
 
         public virtual User Owner{ get; set; }
         public virtual Category Category { get; set; }
