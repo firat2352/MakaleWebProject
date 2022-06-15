@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Makale.DataAccessLayer
 {
-    class DatabaseContext:DbContext
+    public class DatabaseContext:DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Note> Notes { get; set; }
