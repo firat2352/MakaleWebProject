@@ -12,7 +12,7 @@ namespace Makale.BusinessLayer
         public Test()
         {
             DatabaseContext db = new DatabaseContext();
-            db.Database.CreateIfNotExists();
+            db.Categories.ToList();
         }
     }
 }

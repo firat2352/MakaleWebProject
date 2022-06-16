@@ -29,7 +29,7 @@ namespace Makale.Entities
         public bool IsAdmin { get; set; }
 
         [Required]
-        public Guid ActivategGuid { get; set; }
+        public Guid ActivateGuid { get; set; }
 
         public virtual List<Note> Notes { get; set; }
         public virtual List<Comment> Comments { get; set; }
