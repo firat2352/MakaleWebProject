@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Makale.BusinessLayer
+namespace Makale.DataAccessLayer.EF
 {
     public class RepositoryBase
     {

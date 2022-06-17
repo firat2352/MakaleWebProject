@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Makale.BusinessLayer
+namespace Makale.DataAccessLayer.EF
 {
     public class Repository<T>:RepositoryBase where T:class
     {
