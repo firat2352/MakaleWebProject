@@ -1,4 +1,5 @@
 ﻿using Makale.DataAccessLayer;
+using Makale.DataAccessLayer.Abstract;
 using Makale.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Makale.DataAccessLayer.EF
 {
-    public class Repository<T>:RepositoryBase where T:class
+    public class Repository<T>:RepositoryBase,IRepository<T> where T:class
     {
         private DbSet<T> _objectSet;
 

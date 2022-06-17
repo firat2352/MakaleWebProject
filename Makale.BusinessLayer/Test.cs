@@ -1,4 +1,5 @@
-﻿using Makale.DataAccessLayer;
+﻿
+using Makale.DataAccessLayer.EF;
 using Makale.Entities;
 using System;
 using System.Collections.Generic;
