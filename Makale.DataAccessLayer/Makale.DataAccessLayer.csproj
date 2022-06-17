@@ -54,10 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseContext.cs" />
+    <Compile Include="EF\DatabaseContext.cs" />
+    <Compile Include="EF\MyInitializer.cs" />
+    <Compile Include="EF\Repository - Copy.cs" />
     <Compile Include="EF\Repository.cs" />
     <Compile Include="EF\RepositoryBase.cs" />
-    <Compile Include="MyInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

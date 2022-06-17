@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Makale.DataAccessLayer
+namespace Makale.DataAccessLayer.EF
 {
     public class MyInitializer:CreateDatabaseIfNotExists<DatabaseContext>
     {
