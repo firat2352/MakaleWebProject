@@ -13,7 +13,10 @@ namespace Makale.WebProject.Controllers
         public ActionResult Index()
         {
             Test test = new Test();
-            
+            //test.Insert();
+            //test.Update();
+            //test.Delete();
+            test.CommentTest();
 
             return View();
         }
