@@ -1,4 +1,6 @@
-﻿
+﻿@using Makale.Entities
+@model List<Note>
+
 @{
     ViewBag.Title = "Index";
 }
@@ -41,244 +43,65 @@
             </div>
             <!--Yazılar-->
             <div class="row">
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
+
+                @foreach (Note note in Model)
+                {
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <img src="https://picsum.photos/seed/picsum/320/150" alt="@note.Title">
+                            <div class="caption">
 
 
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
-
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
-
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> firatcelik<br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 15:00 <br />
-                            </h6>
-
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-
-                            <p>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-star-empty"></span>15</button>
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
+                                <h4>
+                                    <a href="#">
+                                        @note.Title
+                                    </a>
+                                </h4>
 
 
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
+                                @if (string.IsNullOrEmpty(note.Text) == false && note.Text.Length > 70)
+                                {
+                                    <p>@(note.Text.Substring(0,60) + "...")</p>
+                                    <p class="pull-right">
+                                        <a href="#" data-toggle="modal" data-target="#modal_notedetail" data-note-id="@note.Id" class="btn btn-default btn-sm">devamı <span class="glyphicon glyphicon-chevron-right"></span></a>
+                                    </p>
+                                }
 
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
+                                else
+                                {
+                                    <p> @note.Text</p>
+                                }
 
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> firatcelik<br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 15:00 <br />
-                            </h6>
+                                <p>
+                                    <a href="#">content</a>
+                                </p>
 
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
+                                <h6 class="text-right">
+                                    <span class="glyphicon glyphicon-user"></span> @note.Owner.Username<br />
+                                    <span class="glyphicon glyphicon-time"></span> @note.ModifiedOn.ToString("dd.MM.yy.HH:mm")<br />
+                                </h6>
 
-                            <p>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-star-empty"></span>15</button>
+                            </div>
+                            <div>
+                                <hr />
+                            </div>
+                            <div class="ratings">
+                                <p class="pull-right">
+                                    <button class="btn btn-default btn-sm">
+                                        <span class="glyphicon glyphicon-comment"></span> Yorumlar
+                                    </button>
+                                </p>
 
-                            </p>
+                                <p>
+                                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-star-empty"></span>@note.LikeCount</button>
+
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
+                }
 
 
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
-
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
-
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> firatcelik<br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 15:00 <br />
-                            </h6>
-
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-
-                            <p>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-star-empty"></span>15</button>
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
-
-
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
-
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
-
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> firatcelik<br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 15:00 <br />
-                            </h6>
-
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-
-                            <p>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-star-empty"></span>15</button>
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
-
-
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
-
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
-
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> firatcelik<br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 15:00 <br />
-                            </h6>
-
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-
-                            <p>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-star-empty"></span>15</button>
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
-
-
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
-
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
-
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> firatcelik<br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 15:00 <br />
-                            </h6>
-
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-
-                            <p>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-star-empty"></span>15</button>
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>
