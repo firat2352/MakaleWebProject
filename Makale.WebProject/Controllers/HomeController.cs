@@ -43,5 +43,10 @@ namespace Makale.WebProject.Controllers
 
             return View("Index", note.GetAllNotes().OrderByDescending(n => n.LikeCount).ToList());
         }
+
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }
