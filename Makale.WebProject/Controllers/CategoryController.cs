@@ -12,6 +12,6 @@ namespace Makale.WebProject.Controllers
     public class CategoryController : Controller
     {
         // GET: Category
-      
+      //test
     }
 }
