@@ -1,0 +1,18 @@
+﻿@using Makale.BusinessLayer
+@using Makale.Entities
+
+    @{
+        CategoryManager categoryManager = new CategoryManager();
+        List<Category> liste=categoryManager.GetCategories();
+    }
+
+    <p class="lead">Kategoriler</p>
+    <div class="list-group">
+        <a href="/Home/Index" class="list-group-item"><span class="glyphicon glyphicon-arrow-right"></span> Tümü</a>
+
+        @foreach (Category cat in liste)
+        {
+        <a href="/Category/Select/@cat.Id" title="@cat.Description"  class="list-group-item"><span class="glyphicon glyphicon-arrow-right"></span> @cat.Title</a>
+        }
+
+    </div>
