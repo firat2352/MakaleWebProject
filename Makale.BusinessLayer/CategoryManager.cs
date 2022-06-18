@@ -21,5 +21,7 @@ namespace Makale.BusinessLayer
         {
             return repo_category.Find(m => m.Id == id);
         }
+
+        
     }
 }

@@ -16,7 +16,7 @@ namespace Makale.WebProject.Controllers
         {
 
             NoteManager noteManager = new NoteManager();
-            return View(noteManager.GetAllNotes());
+            return View(noteManager.GetAllNotes().OrderByDescending(x=>x.ModifiedOn).ToList());
         }
 
         public ActionResult ByCategory(int? id)
@@ -34,7 +34,14 @@ namespace Makale.WebProject.Controllers
                 return HttpNotFound();
             }
 
-            return View("Index", category.Notes);
+            return View("Index", category.Notes.OrderByDescending(x => x.ModifiedOn).ToList());
+        }
+
+        public ActionResult MostLiked()
+        {
+            NoteManager note = new NoteManager();
+
+            return View("Index", note.GetAllNotes().OrderByDescending(n => n.LikeCount).ToList());
         }
     }
 }
