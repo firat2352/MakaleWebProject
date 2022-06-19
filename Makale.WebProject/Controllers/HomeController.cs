@@ -102,6 +102,11 @@ namespace Makale.WebProject.Controllers
 
         }
 
+        public ActionResult RegisterOk()
+        {
+            return View();
+        }
+
         public ActionResult UserActivate(Guid activate_id)
         {
             return View();
