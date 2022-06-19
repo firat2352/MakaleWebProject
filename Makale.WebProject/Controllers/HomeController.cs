@@ -71,9 +71,35 @@ namespace Makale.WebProject.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Register(RegisterVİewModel registerVİewModel)
+        public ActionResult Register(RegisterVİewModel model)
         {
-            return View();
+            
+            if (ModelState.IsValid)
+            {
+
+                if(model.Username=="aaa")
+                {
+                    ModelState.AddModelError("", "Kullanıcı adı kullanılıyor.");
+                }
+
+                if (model.Email == "aaa@aa.com")
+                {
+                    ModelState.AddModelError("", "E-posta kullanılıyor.");
+                }
+
+                foreach (var  item in ModelState)
+                {
+                    if(item.Value.Errors.Count>0)
+                    {
+                        return View(model);
+                    }
+                }
+
+                return RedirectToAction("RegisterOk");
+            }
+
+            return View(model);
+
         }
 
         public ActionResult UserActivate(Guid activate_id)
