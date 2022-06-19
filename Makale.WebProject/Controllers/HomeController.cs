@@ -1,5 +1,6 @@
 ﻿using Makale.BusinessLayer;
 using Makale.Entities;
+using Makale.WebProject.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,37 @@ namespace Makale.WebProject.Controllers
         }
 
         public ActionResult About()
+        {
+            return View();
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginViewModel loginViewModel)
+        {
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            return View();
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Register(RegisterVİewModel registerVİewModel)
+        {
+            return View();
+        }
+
+        public ActionResult UserActivate(Guid activate_id)
         {
             return View();
         }
