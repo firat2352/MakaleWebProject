@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Makale.WebProject.ViewModels
+namespace Makale.Entities.ValueObjects
 {
-    public class RegisterVİewModel
+    public class RegisterViewModel
     {
         [DisplayName("Kullanıcı adı"), Required(ErrorMessage = "{0} alanı boş geçilemez"), StringLength(25, ErrorMessage = "{0} alanı max {1} karakter olmalı")]
         public string Username { get; set; }

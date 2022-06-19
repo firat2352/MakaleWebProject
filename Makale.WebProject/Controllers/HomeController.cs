@@ -1,6 +1,6 @@
 ﻿using Makale.BusinessLayer;
 using Makale.Entities;
-using Makale.WebProject.ViewModels;
+using Makale.Entities.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,28 +71,18 @@ namespace Makale.WebProject.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Register(RegisterVİewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             
             if (ModelState.IsValid)
             {
+                NoteUserManager note = new NoteUserManager();
+                BusinessLayerResult<User> result=note.RegisterUser(model);
 
-                if(model.Username=="aaa")
+                if(result.Errors.Count>0)
                 {
-                    ModelState.AddModelError("", "Kullanıcı adı kullanılıyor.");
-                }
-
-                if (model.Email == "aaa@aa.com")
-                {
-                    ModelState.AddModelError("", "E-posta kullanılıyor.");
-                }
-
-                foreach (var  item in ModelState)
-                {
-                    if(item.Value.Errors.Count>0)
-                    {
-                        return View(model);
-                    }
+                    result.Errors.ForEach(x => ModelState.AddModelError("", x));
+                    return View(model);
                 }
 
                 return RedirectToAction("RegisterOk");

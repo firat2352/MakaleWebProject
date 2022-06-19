@@ -32,10 +32,28 @@ namespace Makale.DataAccessLayer.EF
         public int Insert(T obj)
         {
             _objectSet.Add(obj);
+
+            if(obj is EntityBase)
+            {
+                EntityBase o = obj as EntityBase;
+                DateTime now = DateTime.Now;
+
+                o.CreatedOn = now;
+                o.ModifiedOn = now;
+                o.ModifiedUsername = "system";
+            }
+
             return Save();
         }
         public int Update(T obj)
         {
+            if (obj is EntityBase)
+            {
+                EntityBase o = obj as EntityBase;
+
+                o.ModifiedOn = DateTime.Now;
+                o.ModifiedUsername = "system";
+            }
             return Save();
         }
         public int Delete(T obj)
