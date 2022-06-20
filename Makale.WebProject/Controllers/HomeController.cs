@@ -79,10 +79,6 @@ namespace Makale.WebProject.Controllers
             return View();
         }
 
-        public ActionResult Logout()
-        {
-            return View();
-        }
 
         public ActionResult Register()
         {
@@ -118,6 +114,11 @@ namespace Makale.WebProject.Controllers
         public ActionResult UserActivate(Guid activate_id)
         {
             return View();
+        }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index");
         }
     }
 }
