@@ -1,5 +1,6 @@
 ﻿using Makale.DataAccessLayer.EF;
 using Makale.Entities;
+using Makale.Entities.Messages;
 using Makale.Entities.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,13 @@ namespace Makale.BusinessLayer
             {
                  if(user.Username == data.Username)
                 {
-                    res.Errors.Add("Kullanıcı adı kayıtlı");
+                    res.AddError(ErrorMessagesCode.UsernameAlreadyExists, "Kullanıcı Adı Kayıtlı");
                 }
 
 
                 if (user.Email == data.Email)
                 {
-                    res.Errors.Add("E-Posta kayıtlı");
+                    res.AddError(ErrorMessagesCode.EmailAlreadyExists, "Email Kayıtlı");
                 }
             }
 
@@ -49,6 +50,31 @@ namespace Makale.BusinessLayer
                 {
                     res.Result = repo_user.Find(x => x.Email == data.Email && x.Username == data.Username);
                 }
+            }
+
+            return res;
+        }
+
+        public BusinessLayerResult<User> LoginUser(LoginViewModel data)
+        {
+            BusinessLayerResult<User> res = new BusinessLayerResult<User>();
+            res.Result= repo_user.Find(x => x.Username == data.Username &&  x.Password == data.Password);
+
+            
+          
+
+            if (res.Result != null)
+            {
+                if(!res.Result.IsActive)
+                {
+                    res.AddError(ErrorMessagesCode.UserIsNotActive, "Kullanıcı Aktif Değil");
+                    res.AddError(ErrorMessagesCode.CheckYourEmail, "Lütfen E-postanızı Kontrol Ediniz");
+                }
+               
+            }
+            else
+            {
+                res.AddError(ErrorMessagesCode.UsernameOrPassWrong, "Kullanıcı adı ya da şifre uyuşmuyor");
             }
 
             return res;

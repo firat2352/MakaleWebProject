@@ -1,5 +1,6 @@
 ﻿using Makale.BusinessLayer;
 using Makale.Entities;
+using Makale.Entities.Messages;
 using Makale.Entities.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,23 @@ namespace Makale.WebProject.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel loginViewModel)
         {
+            if (ModelState.IsValid)
+            {
+                 NoteUserManager noteUserManager = new NoteUserManager();
+                 BusinessLayerResult<User> businessLayerResult=noteUserManager.LoginUser(loginViewModel);
+
+                if (businessLayerResult.Errors.Count > 0)
+                {
+                businessLayerResult.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+                return View(loginViewModel);
+                }
+
+                Session["loggin"] = businessLayerResult.Result;
+                return RedirectToAction("Index");
+
+            }
+           
+
             return View();
         }
 
@@ -81,7 +99,7 @@ namespace Makale.WebProject.Controllers
 
                 if(result.Errors.Count>0)
                 {
-                    result.Errors.ForEach(x => ModelState.AddModelError("", x));
+                    result.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
                     return View(model);
                 }
 
