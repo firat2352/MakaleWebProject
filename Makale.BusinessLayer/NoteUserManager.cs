@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Makale.Common.Helpers;
+
 
 namespace Makale.BusinessLayer
 {
@@ -49,6 +51,13 @@ namespace Makale.BusinessLayer
                 if(db_result>0)
                 {
                     res.Result = repo_user.Find(x => x.Email == data.Email && x.Username == data.Username);
+
+                    string siteUri = ConfigHelper.Get<string>("SiteRootUri");
+                    string activateUri = $"{siteUri}/Home/UserActivate/{res.Result.ActivateGuid}";
+                    string body = $"Merhaba {res.Result.Username};<br><br>Hesabınızı aktifleştirmek için <a href='{activateUri}' target='_blank'>tıklayınız</a>.";
+
+                    MailHelper.SendMail(body, res.Result.Email, "Makale Hesap Aktifleştirme");
+
                 }
             }
 

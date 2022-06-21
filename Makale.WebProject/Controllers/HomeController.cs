@@ -115,6 +115,8 @@ namespace Makale.WebProject.Controllers
         {
             return View();
         }
+
+
         public ActionResult Logout()
         {
             Session.Clear();
