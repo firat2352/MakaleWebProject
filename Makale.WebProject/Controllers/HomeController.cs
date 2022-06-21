@@ -116,6 +116,10 @@ namespace Makale.WebProject.Controllers
             return View();
         }
 
+        public ActionResult UserActivateOk()
+        {
+
+        }
 
         public ActionResult Logout()
         {
