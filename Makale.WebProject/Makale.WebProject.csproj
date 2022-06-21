@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Init\WebCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +162,10 @@
     <ProjectReference Include="..\Makale.BusinessLayer\Makale.BusinessLayer.csproj">
       <Project>{69B1B6C6-CDBA-4AE0-937E-53D5E7A64393}</Project>
       <Name>Makale.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Makale.Common\Makale.Common.csproj">
+      <Project>{482b89b5-3b23-4212-9fdc-35b1075b7338}</Project>
+      <Name>Makale.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Makale.Entities\Makale.Entities.csproj">
       <Project>{e5a06bce-3ed9-45d4-9b2b-8d06cc07fd55}</Project>

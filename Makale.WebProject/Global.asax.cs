@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Makale.Common;
+using Makale.WebProject.Init;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +15,8 @@ namespace Makale.WebProject
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            App.Common = new WebCommon();
         }
     }
 }

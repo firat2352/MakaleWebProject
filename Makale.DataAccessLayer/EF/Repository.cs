@@ -1,4 +1,5 @@
-﻿using Makale.DataAccessLayer;
+﻿using Makale.Common;
+using Makale.DataAccessLayer;
 using Makale.DataAccessLayer.Abstract;
 using Makale.Entities;
 using System;
@@ -40,7 +41,7 @@ namespace Makale.DataAccessLayer.EF
 
                 o.CreatedOn = now;
                 o.ModifiedOn = now;
-                o.ModifiedUsername = "system";
+                o.ModifiedUsername = App.Common.GetCurrentUserName();
             }
 
             return Save();
