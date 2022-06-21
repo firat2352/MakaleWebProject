@@ -88,5 +88,32 @@ namespace Makale.BusinessLayer
 
             return res;
         }
+
+        public BusinessLayerResult<User> ActivateUser(Guid activateId)
+        {
+            BusinessLayerResult<User> res = new BusinessLayerResult<User>();
+            res.Result =repo_user.Find(x => x.ActivateGuid == activateId);
+            
+            if (res.Result != null)
+            {
+                if (res.Result.IsActive)
+                {
+                    res.AddError(ErrorMessagesCode.UserAlreadyActive, "Kullanıcı zaten aktif edilmiştir.");
+                    return res;
+                }
+
+                res.Result.IsActive = true;
+                repo_user.Update(res.Result);
+
+            }
+            else
+            {
+                res.AddError(ErrorMessagesCode.ActivateIdDoesNotExists, "Aktifleştirilecek kullanıcı bulunamadı.");
+            }
+
+            return res;
+
+
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace Makale.WebProject.Init
                 return user.Username;
             }
 
-            return null;
+            return "system";
         }
     }
 }
