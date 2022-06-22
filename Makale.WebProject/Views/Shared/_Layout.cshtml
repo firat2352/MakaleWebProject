@@ -1,11 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using Makale.Entities
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="     ">
-    <meta name="author" content="">
+    <meta name="author" content="">dd
     <title>Shop Homepage - Start Bootstrap Template </title>
     <!-- Bootstrap Core CSS -->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
@@ -22,6 +24,15 @@
     <![endif]-->
 </head>
 <body>
+
+    @{ User user = null;
+
+        if (Session["login"] != null)
+        {
+            user = Session["login"] as User;
+        } 
+     }
+
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -33,14 +44,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Makaleler</a>
+                <a class="navbar-brand" href="/Home/Index">Makaleler</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+
+                    @if (user != null)
+                    {
                     <li>
                         <a href="#"><span class="glyphicon  glyphicon-wrench"></span> Yönetim</a>
                     </li>
+        
+                     }
+
                     <li>
                         <a href="/Home/MostLiked"><span class="glyphicon  glyphicon-heart"></span> En Beğenilenler</a>
                     </li>
@@ -50,20 +67,34 @@
                     <li>
                         <a href="/Home/About"><span class="glyphicon glyphicon-info-sign"></span> Hakkımızda</a>
                     </li>
+
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+
+                    @if (user == null)
+                    {
                     <li>
                         <a href="/Home/Login"><span class="glyphicon glyphicon-log-in"></span> Giriş</a>
                     </li>
-                    <li>
+
+                     <li>
                         <a href="/Home/Register"><span class="glyphicon glyphicon-user"></span> Üye Ol</a>
-                    </li>
+                     </li>
+
+                     }
+
+                    else
+                    {
+
                     <li>
-                        <a href="#"><span class="glyphicon glyphicon-user"></span> firatcelik</a>
+                        <a href="/Home/Profile"><span class="glyphicon glyphicon-user"></span> @user.Username</a>
                     </li>
                     <li>
                         <a href="/Home/Logout"><span class="glyphicon glyphicon-log-out"></span> Çıkış</a>
                     </li>
+                        
+                    }
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -81,16 +112,16 @@
             <div class="row">
                 <div class="col-lg-4 text-center">
                     <h4>
-                        <strong>Sit amet, consectetur.</strong> 
+                        <strong>Sit amet, consectetur.</strong>
                     </h4>
                     <hr />
                     <p>
-                        
-                                <a href="/Home/About"><span class="glyphicon glyphicon-info-sign"></span> Hakkımızda</a><br />
-                                <a href="/Home/MostLiked"><span class="glyphicon glyphicon-heart"></span> En Beğenilenler</a><br />
-                                <a href="/Home/Index"><span class="glyphicon glyphicon-pencil"></span> Son Yazılar</a>
 
-                        
+                        <a href="/Home/About"><span class="glyphicon glyphicon-info-sign"></span> Hakkımızda</a><br />
+                        <a href="/Home/MostLiked"><span class="glyphicon glyphicon-heart"></span> En Beğenilenler</a><br />
+                        <a href="/Home/Index"><span class="glyphicon glyphicon-pencil"></span> Son Yazılar</a>
+
+
                     </p>
                 </div>
                 <div class="col-lg-4 text-center">
@@ -100,8 +131,8 @@
                     </h4>
                     <hr />
                     <p>
-                        Tüm Hakları Saklıdır &copy;<br /> 
-                       Makale @DateTime.Now.Year
+                        Tüm Hakları Saklıdır &copy;<br />
+                        Makale @DateTime.Now.Year
                     </p>
                 </div>
                 <div class="col-lg-4 text-center">
@@ -123,9 +154,9 @@
                         </div>
                     </div>
 
-                </div>  
+                </div>
 
-              
+
             </div>
         </footer>
     </div>

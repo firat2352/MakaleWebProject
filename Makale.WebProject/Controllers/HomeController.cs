@@ -70,7 +70,7 @@ namespace Makale.WebProject.Controllers
                 return View(loginViewModel);
                 }
 
-                Session["loggin"] = businessLayerResult.Result;
+                Session["login"] = businessLayerResult.Result;
                 return RedirectToAction("Index");
 
             }
