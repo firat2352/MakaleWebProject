@@ -2,6 +2,7 @@
 using Makale.Entities;
 using Makale.Entities.Messages;
 using Makale.Entities.ValueObjects;
+using Makale.WebProject.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,17 +99,23 @@ namespace Makale.WebProject.Controllers
                     return View(model);
                 }
 
-                return RedirectToAction("RegisterOk");
+                OkViewModel okViewModel = new OkViewModel()
+                {
+                    Title="Kayıt Başarılı",
+                    RedirectingUrl="/Home/Login",
+                };
+
+
+                okViewModel.Items.Add("Lutfen e-posta adresinize gelen linke tıklayarak hesabınızı aktive ediniz");
+
+                return View("Ok",okViewModel);
             }
 
             return View(model);
 
         }
 
-        public ActionResult RegisterOk()
-        {
-            return View();
-        }
+      
 
         public ActionResult UserActivate(Guid activate_id)
         {
@@ -117,30 +124,26 @@ namespace Makale.WebProject.Controllers
 
             if(res.Errors.Count>0)
             {
-                TempData["errors"] = res.Errors;
-                return RedirectToAction("UserActivateCancel");
+                ErrorViewModel errorViewModel = new ErrorViewModel()
+                {
+                    Title = "Geçersiz İşlem",
+                    Items = res.Errors,
+                };
+
+                return View("Error", errorViewModel);
             }
 
-
-            return RedirectToAction("UserActivateOk");  
-        }
-
-        public ActionResult UserActivateOk()
-        {
-            return View();
-        }
-
-        public ActionResult UserActivateCancel()
-        {
-            List<ErrorMessageObj> errors = null;
-                
-            if(TempData["errors"] !=null)
+            OkViewModel okViewModel = new OkViewModel()
             {
-                errors = TempData["errors"] as List<ErrorMessageObj>;
+               Title="Hesap Aktifleştirildi",
+               RedirectingUrl="Home/Login"
+            };
 
-            }
-            return View(errors);
+            okViewModel.Items.Add(" Hesabınız Aktifleştirildi. Artık not paylaşabilir ve beğenme yapabilirsiniz.");
+            return View("Ok",okViewModel);  
         }
+
+
         public ActionResult Logout()
         {
             Session.Clear();
@@ -155,7 +158,13 @@ namespace Makale.WebProject.Controllers
 
             if(res.Errors.Count>0)
             {
+                ErrorViewModel errorViewModel = new ErrorViewModel()
+                {
+                    Title = "Hata Oluştu",
+                    Items = res.Errors,
+                };
 
+                return View("Error", errorViewModel);
             }
 
             return View(res.Result);
@@ -177,7 +186,21 @@ namespace Makale.WebProject.Controllers
             return View();
         }
 
+        public ActionResult TestNotify()
+        {
+            ErrorViewModel model = new ErrorViewModel()
+            {
+                Header = "Yönlendirme",
+                Title = "oK Test",
+                RedirectingTimeout = 3000,
+                Items = new List<ErrorMessageObj>() {
+                    new ErrorMessageObj() { Message = "Test Başarılı 1" }, 
+                    new ErrorMessageObj() { Message = "Test Başarılı 2" } 
+                }
+            };
 
+            return View("Error",model);
+        }
 
 
     }

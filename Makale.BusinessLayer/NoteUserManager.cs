@@ -41,6 +41,7 @@ namespace Makale.BusinessLayer
                 {
                     Username = data.Username,
                     Email=data.Email,
+                    ProfileImageFileName="test-image.png",
                     Password=data.Password,
                     ActivateGuid=Guid.NewGuid(),
                     IsActive=false,
