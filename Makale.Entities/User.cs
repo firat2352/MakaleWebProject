@@ -23,6 +23,9 @@ namespace Makale.Entities
         [Required,StringLength(70)]
         public string Email { get; set; }
 
+        [StringLength(50)]
+        public string ProfileImageFileName { get; set; }
+
         [Required,StringLength(25)]
         public string Password { get; set; }
         public bool IsActive{ get; set; }
