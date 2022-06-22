@@ -25,6 +25,7 @@ namespace Makale.DataAccessLayer.EF
                 IsAdmin = true,
                 Username = "firatcelik",
                 Password = "123456",
+                ProfileImageFileName = "test-image.png",
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now.AddMinutes(5),
                 ModifiedUsername = "firatcelik"
@@ -41,6 +42,7 @@ namespace Makale.DataAccessLayer.EF
                 IsAdmin = false,
                 Username = "celikfirat",
                 Password = "654321",
+                ProfileImageFileName = "test-image.png",
                 CreatedOn = DateTime.Now.AddHours(1),
                 ModifiedOn = DateTime.Now.AddMinutes(65),
                 ModifiedUsername = "firatcelik"
@@ -61,6 +63,7 @@ namespace Makale.DataAccessLayer.EF
                     IsAdmin = false,
                     Username = $"user{i}",
                     Password = "123",
+                    ProfileImageFileName = "test-image.png",
                     CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
                     ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
                     ModifiedUsername = $"user{i}"
