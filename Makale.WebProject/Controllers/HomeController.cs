@@ -79,7 +79,6 @@ namespace Makale.WebProject.Controllers
             return View();
         }
 
-
         public ActionResult Register()
         {
             return View();
@@ -142,13 +141,44 @@ namespace Makale.WebProject.Controllers
             }
             return View(errors);
         }
-
-
-
         public ActionResult Logout()
         {
             Session.Clear();
             return RedirectToAction("Index");
         }
+
+        public ActionResult ShowProfile()
+        {
+            User currentUser=Session["login"] as User;
+            NoteUserManager noteUserManager = new NoteUserManager();
+            BusinessLayerResult<User> res=noteUserManager.GetUserByID(currentUser.Id);
+
+            if(res.Errors.Count>0)
+            {
+
+            }
+
+            return View(res.Result);
+        }
+
+        public ActionResult EditProfile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditProfile(User user)
+        {
+            return View();
+        }
+
+        public ActionResult RemoveProfile(User user)
+        {
+            return View();
+        }
+
+
+
+
     }
 }

@@ -115,5 +115,18 @@ namespace Makale.BusinessLayer
 
 
         }
+
+        public BusinessLayerResult<User> GetUserByID(int id)
+        {
+            BusinessLayerResult<User> res = new BusinessLayerResult<User>();
+            res.Result = repo_user.Find(m => m.Id == id);
+
+            if(res.Result == null)
+            {
+                res.AddError(ErrorMessagesCode.UserNotFound, "Kullanıcı Bulunamadı");
+            }
+
+            return res;
+        }
     }
 }
