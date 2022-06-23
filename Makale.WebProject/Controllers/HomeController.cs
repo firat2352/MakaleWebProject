@@ -115,8 +115,6 @@ namespace Makale.WebProject.Controllers
 
         }
 
-      
-
         public ActionResult UserActivate(Guid activate_id)
         {
             NoteUserManager um = new NoteUserManager();
@@ -142,7 +140,6 @@ namespace Makale.WebProject.Controllers
             okViewModel.Items.Add(" Hesabınız Aktifleştirildi. Artık not paylaşabilir ve beğenme yapabilirsiniz.");
             return View("Ok",okViewModel);  
         }
-
 
         public ActionResult Logout()
         {
@@ -172,14 +169,60 @@ namespace Makale.WebProject.Controllers
 
         public ActionResult EditProfile()
         {
-            return View();
+            User currentUser = Session["login"] as User;
+            NoteUserManager noteUserManager = new NoteUserManager();
+            BusinessLayerResult<User> res = noteUserManager.GetUserByID(currentUser.Id);
+
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorViewModel = new ErrorViewModel()
+                {
+                    Title = "Hata Oluştu",
+                    Items = res.Errors,
+                };
+
+                return View("Error", errorViewModel);
+            }
+
+            return View(res.Result);
         }
 
         [HttpPost]
-        public ActionResult EditProfile(User user)
+        public ActionResult EditProfile(User user,HttpPostedFileBase ProfileImage)
         {
-            return View();
+            if (ProfileImage != null &&
+                      (ProfileImage.ContentType == "image/jpeg" ||
+                      ProfileImage.ContentType == "image/jpg" ||
+                      ProfileImage.ContentType == "image/png"))
+            {
+                string filename = $"user_{user.Id}.{ProfileImage.ContentType.Split('/')[1]}";
+
+                ProfileImage.SaveAs(Server.MapPath($"~/images/{filename}"));
+                user.ProfileImageFileName = filename;
+            }
+
+            BusinessLayerResult<User> res = NoteUserManager.UpdateProfile(user);
+
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorViewModel = new ErrorViewModel()
+                {
+                    Items = res.Errors,
+                    Title = "Profil Güncellenemedi.",
+                    RedirectingUrl = "/Home/EditProfile"
+                };
+
+                return View("Error", errorViewModel);
+            }
+
+           
+            Session.Set<User>("login", res.Result);
+
+            return RedirectToAction("ShowProfile");
         }
+
+            return View(user);
+    }
 
         public ActionResult RemoveProfile(User user)
         {

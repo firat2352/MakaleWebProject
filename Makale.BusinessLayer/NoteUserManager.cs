@@ -129,5 +129,45 @@ namespace Makale.BusinessLayer
 
             return res;
         }
+
+        public BusinessLayerResult<User> UpdateProfile(User data)
+        {
+            User db_user =repo_user.Find(x => x.Id != data.Id && (x.Username == data.Username || x.Email == data.Email));
+            BusinessLayerResult<User> res = new BusinessLayerResult<User>();
+
+            if (db_user != null && db_user.Id != data.Id)
+            {
+                if (db_user.Username == data.Username)
+                {
+                    res.AddError(ErrorMessagesCode.UsernameAlreadyExists, "Kullanıcı adı kayıtlı.");
+                }
+
+                if (db_user.Email == data.Email)
+                {
+                    res.AddError(ErrorMessagesCode.EmailAlreadyExists, "E-posta adresi kayıtlı.");
+                }
+
+                return res;
+            }
+
+            res.Result = repo_user.Find(x => x.Id == data.Id);
+            res.Result.Email = data.Email;
+            res.Result.Name = data.Name;
+            res.Result.Surname = data.Surname;
+            res.Result.Password = data.Password;
+            res.Result.Username = data.Username;
+
+            if (string.IsNullOrEmpty(data.ProfileImageFileName) == false)
+            {
+                res.Result.ProfileImageFileName = data.ProfileImageFileName;
+            }
+
+            if (repo_user.Update(res.Result) == 0)
+            {
+                res.AddError(ErrorMessagesCode.ProfileCouldNotUpdated, "Profil güncellenemedi.");
+            }
+
+            return res;
+        }
     }
 }

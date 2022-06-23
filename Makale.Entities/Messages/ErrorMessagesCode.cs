@@ -12,5 +12,6 @@ namespace Makale.Entities.Messages
         UserAlreadyActive = 154,
         ActivateIdDoesNotExists = 155,
         UserNotFound=156,
+        ProfileCouldNotUpdated = 157,
     }
 }
