@@ -191,38 +191,42 @@ namespace Makale.WebProject.Controllers
         [HttpPost]
         public ActionResult EditProfile(User user, HttpPostedFileBase ProfileImage)
         {
-            if (ProfileImage != null &&
-                      (ProfileImage.ContentType == "image/jpeg" ||
-                      ProfileImage.ContentType == "image/jpg" ||
-                      ProfileImage.ContentType == "image/png"))
+            ModelState.Remove("ModifiedUsername "); 
+           if(ModelState.IsValid)
             {
-                string filename = $"user_{user.Id}.{ProfileImage.ContentType.Split('/')[1]}";
-
-                ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
-                user.ProfileImageFileName = filename;
-            }
-
-            NoteUserManager noteUserManager = new NoteUserManager();
-            BusinessLayerResult<User> res = noteUserManager.UpdateProfile(user);
-
-            if (res.Errors.Count > 0)
-            {
-                ErrorViewModel errorViewModel = new ErrorViewModel()
+                if (ProfileImage != null &&
+                     (ProfileImage.ContentType == "image/jpeg" ||
+                     ProfileImage.ContentType == "image/jpg" ||
+                     ProfileImage.ContentType == "image/png"))
                 {
-                    Items = res.Errors,
-                    Title = "Profil Güncellenemedi.",
-                    RedirectingUrl = "/Home/EditProfile"
-                };
+                    string filename = $"user_{user.Id}.{ProfileImage.ContentType.Split('/')[1]}";
 
-                return View("Error", errorViewModel);
+                    ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
+                    user.ProfileImageFileName = filename;
+                }
+
+                NoteUserManager noteUserManager = new NoteUserManager();
+                BusinessLayerResult<User> res = noteUserManager.UpdateProfile(user);
+
+                if (res.Errors.Count > 0)
+                {
+                    ErrorViewModel errorViewModel = new ErrorViewModel()
+                    {
+                        Items = res.Errors,
+                        Title = "Profil Güncellenemedi.",
+                        RedirectingUrl = "/Home/EditProfile"
+                    };
+
+                    return View("Error", errorViewModel);
+                }
+
+
+                Session["login"] = res.Result;
+
+                return RedirectToAction("ShowProfile");
             }
 
-
-            Session["login"] = res.Result;
-
-            return RedirectToAction("ShowProfile");
-
-
+            return View(user);
         }
         public ActionResult DeleteProfile(User user)
         {
