@@ -19,7 +19,7 @@ namespace Makale.WebProject.Controllers
         {
 
             NoteManager noteManager = new NoteManager();
-            return View(noteManager.GetAllNotes().OrderByDescending(x=>x.ModifiedOn).ToList());
+            return View(noteManager.GetAllNotes().OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
         public ActionResult ByCategory(int? id)
@@ -62,20 +62,20 @@ namespace Makale.WebProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                 NoteUserManager noteUserManager = new NoteUserManager();
-                 BusinessLayerResult<User> businessLayerResult=noteUserManager.LoginUser(loginViewModel);
+                NoteUserManager noteUserManager = new NoteUserManager();
+                BusinessLayerResult<User> businessLayerResult = noteUserManager.LoginUser(loginViewModel);
 
                 if (businessLayerResult.Errors.Count > 0)
                 {
-                businessLayerResult.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
-                return View(loginViewModel);
+                    businessLayerResult.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+                    return View(loginViewModel);
                 }
 
                 Session["login"] = businessLayerResult.Result;
                 return RedirectToAction("Index");
 
             }
-           
+
 
             return View();
         }
@@ -87,13 +87,13 @@ namespace Makale.WebProject.Controllers
         [HttpPost]
         public ActionResult Register(RegisterViewModel model)
         {
-            
+
             if (ModelState.IsValid)
             {
                 NoteUserManager note = new NoteUserManager();
-                BusinessLayerResult<User> result=note.RegisterUser(model);
+                BusinessLayerResult<User> result = note.RegisterUser(model);
 
-                if(result.Errors.Count>0)
+                if (result.Errors.Count > 0)
                 {
                     result.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
                     return View(model);
@@ -101,14 +101,14 @@ namespace Makale.WebProject.Controllers
 
                 OkViewModel okViewModel = new OkViewModel()
                 {
-                    Title="Kayıt Başarılı",
-                    RedirectingUrl="/Home/Login",
+                    Title = "Kayıt Başarılı",
+                    RedirectingUrl = "/Home/Login",
                 };
 
 
                 okViewModel.Items.Add("Lutfen e-posta adresinize gelen linke tıklayarak hesabınızı aktive ediniz");
 
-                return View("Ok",okViewModel);
+                return View("Ok", okViewModel);
             }
 
             return View(model);
@@ -118,9 +118,9 @@ namespace Makale.WebProject.Controllers
         public ActionResult UserActivate(Guid activate_id)
         {
             NoteUserManager um = new NoteUserManager();
-            BusinessLayerResult<User> res=um.ActivateUser(activate_id);
+            BusinessLayerResult<User> res = um.ActivateUser(activate_id);
 
-            if(res.Errors.Count>0)
+            if (res.Errors.Count > 0)
             {
                 ErrorViewModel errorViewModel = new ErrorViewModel()
                 {
@@ -133,12 +133,12 @@ namespace Makale.WebProject.Controllers
 
             OkViewModel okViewModel = new OkViewModel()
             {
-               Title="Hesap Aktifleştirildi",
-               RedirectingUrl="Home/Login"
+                Title = "Hesap Aktifleştirildi",
+                RedirectingUrl = "Home/Login"
             };
 
             okViewModel.Items.Add(" Hesabınız Aktifleştirildi. Artık not paylaşabilir ve beğenme yapabilirsiniz.");
-            return View("Ok",okViewModel);  
+            return View("Ok", okViewModel);
         }
 
         public ActionResult Logout()
@@ -149,11 +149,11 @@ namespace Makale.WebProject.Controllers
 
         public ActionResult ShowProfile()
         {
-            User currentUser=Session["login"] as User;
+            User currentUser = Session["login"] as User;
             NoteUserManager noteUserManager = new NoteUserManager();
-            BusinessLayerResult<User> res=noteUserManager.GetUserByID(currentUser.Id);
+            BusinessLayerResult<User> res = noteUserManager.GetUserByID(currentUser.Id);
 
-            if(res.Errors.Count>0)
+            if (res.Errors.Count > 0)
             {
                 ErrorViewModel errorViewModel = new ErrorViewModel()
                 {
@@ -168,6 +168,7 @@ namespace Makale.WebProject.Controllers
         }
 
         public ActionResult EditProfile()
+
         {
             User currentUser = Session["login"] as User;
             NoteUserManager noteUserManager = new NoteUserManager();
@@ -188,7 +189,7 @@ namespace Makale.WebProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditProfile(User user,HttpPostedFileBase ProfileImage)
+        public ActionResult EditProfile(User user, HttpPostedFileBase ProfileImage)
         {
             if (ProfileImage != null &&
                       (ProfileImage.ContentType == "image/jpeg" ||
@@ -197,11 +198,12 @@ namespace Makale.WebProject.Controllers
             {
                 string filename = $"user_{user.Id}.{ProfileImage.ContentType.Split('/')[1]}";
 
-                ProfileImage.SaveAs(Server.MapPath($"~/images/{filename}"));
+                ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
                 user.ProfileImageFileName = filename;
             }
 
-            BusinessLayerResult<User> res = NoteUserManager.UpdateProfile(user);
+            NoteUserManager noteUserManager = new NoteUserManager();
+            BusinessLayerResult<User> res = noteUserManager.UpdateProfile(user);
 
             if (res.Errors.Count > 0)
             {
@@ -215,18 +217,35 @@ namespace Makale.WebProject.Controllers
                 return View("Error", errorViewModel);
             }
 
-           
-            Session.Set<User>("login", res.Result);
+
+            Session["login"] = res.Result;
 
             return RedirectToAction("ShowProfile");
+
+
         }
-
-            return View(user);
-    }
-
-        public ActionResult RemoveProfile(User user)
+        public ActionResult DeleteProfile(User user)
         {
-            return View();
+            User currentUser = Session["login"] as User;
+
+            NoteUserManager noteUserManager = new NoteUserManager();
+            BusinessLayerResult<User> res = noteUserManager.RemoveUserById(currentUser.Id);
+
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorObj = new ErrorViewModel()
+                {
+                    Items = res.Errors,
+                    Title = "Profil Silinemedi.",
+                    RedirectingUrl = "/Home/ShowProfile"
+                };
+
+                return View("Error", errorObj);
+            }
+
+            Session.Clear();
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult TestNotify()
@@ -237,14 +256,13 @@ namespace Makale.WebProject.Controllers
                 Title = "oK Test",
                 RedirectingTimeout = 3000,
                 Items = new List<ErrorMessageObj>() {
-                    new ErrorMessageObj() { Message = "Test Başarılı 1" }, 
-                    new ErrorMessageObj() { Message = "Test Başarılı 2" } 
+                    new ErrorMessageObj() { Message = "Test Başarılı 1" },
+                    new ErrorMessageObj() { Message = "Test Başarılı 2" }
                 }
             };
 
-            return View("Error",model);
+            return View("Error", model);
         }
-
 
     }
 }

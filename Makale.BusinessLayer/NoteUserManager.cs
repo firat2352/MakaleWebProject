@@ -169,5 +169,26 @@ namespace Makale.BusinessLayer
 
             return res;
         }
+
+        public BusinessLayerResult<User> RemoveUserById(int id)
+        {
+            BusinessLayerResult<User> res = new BusinessLayerResult<User>();
+            User user = repo_user.Find(x => x.Id == id);
+
+            if (user != null)
+            {
+                if (repo_user.Delete(user) == 0)
+                {
+                    res.AddError(ErrorMessagesCode.UserCouldNotRemove, "Kullanıcı silinemedi.");
+                    return res;
+                }
+            }
+            else
+            {
+                res.AddError(ErrorMessagesCode.UserCouldNotFind, "Kullanıcı bulunamadı.");
+            }
+
+            return res;
+        }
     }
 }
