@@ -104,62 +104,6 @@
 
     <!-- Page Content -->
     @RenderBody()
-    <!-- /.container -->
-    <div class="container">
-        <hr>
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-4 text-center">
-                    <h4>
-                        <strong>Sit amet, consectetur.</strong>
-                    </h4>
-                    <hr />
-                    <p>
-
-                        <a href="/Home/About"><span class="glyphicon glyphicon-info-sign"></span> Hakkımızda</a><br />
-                        <a href="/Home/MostLiked"><span class="glyphicon glyphicon-heart"></span> En Beğenilenler</a><br />
-                        <a href="/Home/Index"><span class="glyphicon glyphicon-pencil"></span> Son Yazılar</a>
-
-
-                    </p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <h4>
-                        <strong>Makalem</strong>
-
-                    </h4>
-                    <hr />
-                    <p>
-                        Tüm Hakları Saklıdır &copy;<br />
-                        Makale @DateTime.Now.Year
-                    </p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <h4>
-                        <strong>E-Bülten</strong>
-
-                    </h4>
-
-                    <hr />
-                    <div class="col-md-10 col-md-offset-1">
-                        <p>
-                            Elit fusce vel sapien elit in malesuada.
-                        </p>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="e-posta adresiniz">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-send"></span> Gönder</button>
-                            </span>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </footer>
-    </div>
-    <!-- /.container -->
-</body>
+    
+    @RenderSection("footer",required:false)
 </html>
