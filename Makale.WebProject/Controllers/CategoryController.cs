@@ -17,13 +17,11 @@ namespace Makale.WebProject.Controllers
     {
         private CategoryManager categoryManager = new CategoryManager();
 
-        // GET: Categories
         public ActionResult Index()
         {
             return View(categoryManager.List());
         }
 
-        // GET: Categories/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)

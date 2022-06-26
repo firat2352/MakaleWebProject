@@ -22,7 +22,6 @@ namespace Makale.WebProject.Controllers
         public ActionResult Index()
         {
 
-           
             return View(noteManager.ListQueryable().OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
