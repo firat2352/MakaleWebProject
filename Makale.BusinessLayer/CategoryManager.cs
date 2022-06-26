@@ -1,4 +1,4 @@
-﻿using Makale.DataAccessLayer.EF;
+﻿using Makale.BusinessLayer.Abstract;
 using Makale.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,20 +8,9 @@ using System.Threading.Tasks;
 
 namespace Makale.BusinessLayer
 {
-    public class CategoryManager
+    public class CategoryManager:ManagerBase<Category>
     {
-        private Repository<Category> repo_category = new Repository<Category>();
-
-        public List<Category> GetCategories()
-        {
-            return repo_category.List();
-        }
-
-        public Category GetCategoryByID(int id)
-        {
-            return repo_category.Find(m => m.Id == id);
-        }
-
+       
         
     }
 }

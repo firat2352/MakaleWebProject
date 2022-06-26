@@ -8,16 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Makale.Common.Helpers;
-
+using Makale.BusinessLayer.Result;
+using Makale.BusinessLayer.Abstract;
 
 namespace Makale.BusinessLayer
 {
-    public class NoteUserManager
+    public class NoteUserManager:ManagerBase<User>
     {
-        private Repository<User> repo_user = new Repository<User>();
+       
         public BusinessLayerResult<User> RegisterUser(RegisterViewModel data)
         {
-           User user= repo_user.Find(x => x.Username == data.Username || x.Email==data.Email);
+           User user= Find(x => x.Username == data.Username || x.Email==data.Email);
            BusinessLayerResult<User> res = new BusinessLayerResult<User>();
 
 
@@ -37,7 +38,7 @@ namespace Makale.BusinessLayer
 
             else
             {
-                int db_result=repo_user.Insert(new User()
+                int db_result=Insert(new User()
                 {
                     Username = data.Username,
                     Email=data.Email,
@@ -51,7 +52,7 @@ namespace Makale.BusinessLayer
 
                 if(db_result>0)
                 {
-                    res.Result = repo_user.Find(x => x.Email == data.Email && x.Username == data.Username);
+                    res.Result = Find(x => x.Email == data.Email && x.Username == data.Username);
 
                     string siteUri = ConfigHelper.Get<string>("SiteRootUri");
                     string activateUri = $"{siteUri}/Home/UserActivate/{res.Result.ActivateGuid}";
@@ -68,7 +69,7 @@ namespace Makale.BusinessLayer
         public BusinessLayerResult<User> LoginUser(LoginViewModel data)
         {
             BusinessLayerResult<User> res = new BusinessLayerResult<User>();
-            res.Result= repo_user.Find(x => x.Username == data.Username &&  x.Password == data.Password);
+            res.Result= Find(x => x.Username == data.Username &&  x.Password == data.Password);
 
             
           
@@ -93,7 +94,7 @@ namespace Makale.BusinessLayer
         public BusinessLayerResult<User> ActivateUser(Guid activateId)
         {
             BusinessLayerResult<User> res = new BusinessLayerResult<User>();
-            res.Result =repo_user.Find(x => x.ActivateGuid == activateId);
+            res.Result =Find(x => x.ActivateGuid == activateId);
             
             if (res.Result != null)
             {
@@ -104,7 +105,7 @@ namespace Makale.BusinessLayer
                 }
 
                 res.Result.IsActive = true;
-                repo_user.Update(res.Result);
+                Update(res.Result);
 
             }
             else
@@ -120,7 +121,7 @@ namespace Makale.BusinessLayer
         public BusinessLayerResult<User> GetUserByID(int id)
         {
             BusinessLayerResult<User> res = new BusinessLayerResult<User>();
-            res.Result = repo_user.Find(m => m.Id == id);
+            res.Result = Find(m => m.Id == id);
 
             if(res.Result == null)
             {
@@ -132,7 +133,7 @@ namespace Makale.BusinessLayer
 
         public BusinessLayerResult<User> UpdateProfile(User data)
         {
-            User db_user =repo_user.Find(x => x.Id != data.Id && (x.Username == data.Username || x.Email == data.Email));
+            User db_user =Find(x => x.Id != data.Id && (x.Username == data.Username || x.Email == data.Email));
             BusinessLayerResult<User> res = new BusinessLayerResult<User>();
 
             if (db_user != null && db_user.Id != data.Id)
@@ -150,7 +151,7 @@ namespace Makale.BusinessLayer
                 return res;
             }
 
-            res.Result = repo_user.Find(x => x.Id == data.Id);
+            res.Result = Find(x => x.Id == data.Id);
             res.Result.Email = data.Email;
             res.Result.Name = data.Name;
             res.Result.Surname = data.Surname;
@@ -162,7 +163,7 @@ namespace Makale.BusinessLayer
                 res.Result.ProfileImageFileName = data.ProfileImageFileName;
             }
 
-            if (repo_user.Update(res.Result) == 0)
+            if (Update(res.Result) == 0)
             {
                 res.AddError(ErrorMessagesCode.ProfileCouldNotUpdated, "Profil güncellenemedi.");
             }
@@ -173,11 +174,11 @@ namespace Makale.BusinessLayer
         public BusinessLayerResult<User> RemoveUserById(int id)
         {
             BusinessLayerResult<User> res = new BusinessLayerResult<User>();
-            User user = repo_user.Find(x => x.Id == id);
+            User user = Find(x => x.Id == id);
 
             if (user != null)
             {
-                if (repo_user.Delete(user) == 0)
+                if (Delete(user) == 0)
                 {
                     res.AddError(ErrorMessagesCode.UserCouldNotRemove, "Kullanıcı silinemedi.");
                     return res;

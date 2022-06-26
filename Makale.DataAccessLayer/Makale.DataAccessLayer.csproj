@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="EF\DatabaseContext.cs" />
     <Compile Include="EF\MyInitializer.cs" />
     <Compile Include="EF\Repository.cs" />
@@ -70,10 +69,17 @@
       <Project>{482B89B5-3B23-4212-9FDC-35B1075B7338}</Project>
       <Name>Makale.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Makale.Core\Makale.Core.csproj">
+      <Project>{bef6c3fd-c322-4f46-a3de-0132b444a81d}</Project>
+      <Name>Makale.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Makale.Entities\Makale.Entities.csproj">
       <Project>{E5A06BCE-3ED9-45D4-9B2B-8D06CC07FD55}</Project>
       <Name>Makale.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Abstract\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

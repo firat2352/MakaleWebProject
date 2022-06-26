@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Makale.DataAccessLayer.Abstract
+namespace Makale.Core.DataAccess
 {
-    public interface IRepository<T>
+    public interface IDataAccess<T>
     {
        List<T> List();
        List<T> List(Expression<Func<T, bool>> where);
@@ -16,6 +16,7 @@ namespace Makale.DataAccessLayer.Abstract
        int Delete(T obj);
        T Find(Expression<Func<T, bool>> where);
        int Save();
-    
+       IQueryable<T> ListQueryable();
+
     }
 }

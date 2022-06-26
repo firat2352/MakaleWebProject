@@ -1,6 +1,5 @@
 ﻿using Makale.Common;
-using Makale.DataAccessLayer;
-using Makale.DataAccessLayer.Abstract;
+using Makale.Core.DataAccess;
 using Makale.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Makale.DataAccessLayer.EF
 {
-    public class Repository<T>:RepositoryBase,IRepository<T> where T:class
+    public class Repository<T>:RepositoryBase,IDataAccess<T> where T:class
     {
         private DbSet<T> _objectSet;
 
@@ -72,5 +71,9 @@ namespace Makale.DataAccessLayer.EF
             return context.SaveChanges();
         }
 
+        public IQueryable<T> ListQueryable()
+        {
+            return _objectSet.AsQueryable<T>();
+        }
     }
 }

@@ -61,8 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLayerResult.cs" />
+    <Compile Include="Result\BusinessLayerResult.cs" />
     <Compile Include="CategoryManager.cs" />
+    <Compile Include="Abstract\ManagerBase.cs" />
     <Compile Include="NoteManager.cs" />
     <Compile Include="NoteUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +72,10 @@
     <ProjectReference Include="..\Makale.Common\Makale.Common.csproj">
       <Project>{482b89b5-3b23-4212-9fdc-35b1075b7338}</Project>
       <Name>Makale.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Makale.Core\Makale.Core.csproj">
+      <Project>{bef6c3fd-c322-4f46-a3de-0132b444a81d}</Project>
+      <Name>Makale.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Makale.DataAccessLayer\Makale.DataAccessLayer.csproj">
       <Project>{2ed6cccc-50a2-428b-8597-b75db708c8a2}</Project>

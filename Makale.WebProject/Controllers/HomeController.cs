@@ -1,4 +1,5 @@
 ﻿using Makale.BusinessLayer;
+using Makale.BusinessLayer.Result;
 using Makale.Entities;
 using Makale.Entities.Messages;
 using Makale.Entities.ValueObjects;
@@ -14,12 +15,15 @@ namespace Makale.WebProject.Controllers
 {
     public class HomeController : Controller
     {
+       private NoteManager noteManager = new NoteManager();
+       private CategoryManager cm = new CategoryManager();
+       private NoteUserManager noteUserManager = new NoteUserManager();
         // GET: Home
         public ActionResult Index()
         {
 
-            NoteManager noteManager = new NoteManager();
-            return View(noteManager.GetAllNotes().OrderByDescending(x => x.ModifiedOn).ToList());
+           
+            return View(noteManager.ListQueryable().OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
         public ActionResult ByCategory(int? id)
@@ -29,8 +33,8 @@ namespace Makale.WebProject.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            CategoryManager cm = new CategoryManager();
-            Category category = cm.GetCategoryByID(id.Value);
+           
+            Category category = cm.Find(x=>x.Id==id.Value);
 
             if (category == null)
             {
@@ -42,9 +46,9 @@ namespace Makale.WebProject.Controllers
 
         public ActionResult MostLiked()
         {
-            NoteManager note = new NoteManager();
+          
 
-            return View("Index", note.GetAllNotes().OrderByDescending(n => n.LikeCount).ToList());
+            return View("Index", noteManager.ListQueryable().OrderByDescending(n => n.Likes).ToList());
         }
 
         public ActionResult About()
@@ -62,7 +66,7 @@ namespace Makale.WebProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                NoteUserManager noteUserManager = new NoteUserManager();
+              
                 BusinessLayerResult<User> businessLayerResult = noteUserManager.LoginUser(loginViewModel);
 
                 if (businessLayerResult.Errors.Count > 0)
@@ -90,8 +94,8 @@ namespace Makale.WebProject.Controllers
 
             if (ModelState.IsValid)
             {
-                NoteUserManager note = new NoteUserManager();
-                BusinessLayerResult<User> result = note.RegisterUser(model);
+              
+                BusinessLayerResult<User> result = noteUserManager.RegisterUser(model);
 
                 if (result.Errors.Count > 0)
                 {
@@ -117,8 +121,8 @@ namespace Makale.WebProject.Controllers
 
         public ActionResult UserActivate(Guid activate_id)
         {
-            NoteUserManager um = new NoteUserManager();
-            BusinessLayerResult<User> res = um.ActivateUser(activate_id);
+           
+            BusinessLayerResult<User> res = noteUserManager.ActivateUser(activate_id);
 
             if (res.Errors.Count > 0)
             {
@@ -150,7 +154,7 @@ namespace Makale.WebProject.Controllers
         public ActionResult ShowProfile()
         {
             User currentUser = Session["login"] as User;
-            NoteUserManager noteUserManager = new NoteUserManager();
+          
             BusinessLayerResult<User> res = noteUserManager.GetUserByID(currentUser.Id);
 
             if (res.Errors.Count > 0)
@@ -171,7 +175,7 @@ namespace Makale.WebProject.Controllers
 
         {
             User currentUser = Session["login"] as User;
-            NoteUserManager noteUserManager = new NoteUserManager();
+           
             BusinessLayerResult<User> res = noteUserManager.GetUserByID(currentUser.Id);
 
             if (res.Errors.Count > 0)
@@ -205,7 +209,7 @@ namespace Makale.WebProject.Controllers
                     user.ProfileImageFileName = filename;
                 }
 
-                NoteUserManager noteUserManager = new NoteUserManager();
+              
                 BusinessLayerResult<User> res = noteUserManager.UpdateProfile(user);
 
                 if (res.Errors.Count > 0)
@@ -232,7 +236,7 @@ namespace Makale.WebProject.Controllers
         {
             User currentUser = Session["login"] as User;
 
-            NoteUserManager noteUserManager = new NoteUserManager();
+            
             BusinessLayerResult<User> res = noteUserManager.RemoveUserById(currentUser.Id);
 
             if (res.Errors.Count > 0)
