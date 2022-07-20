@@ -45,6 +45,10 @@ namespace Makale.WebProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUsername");
+
             if (ModelState.IsValid)
             {
                 categoryManager.Insert(category);
@@ -57,6 +61,8 @@ namespace Makale.WebProject.Controllers
 
         public ActionResult Edit(int? id)
         {
+          
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -75,9 +81,18 @@ namespace Makale.WebProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Category category)
         {
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUsername");
+
             if (ModelState.IsValid)
             {
-              //
+                Category category1 = categoryManager.Find(x => x.Id == category.Id);
+                category1.Title = category.Title;
+                category1.Description = category.Description;
+
+                categoryManager.Update(category1);
+
                 return RedirectToAction("Index");
             }
             return View(category);

@@ -22,7 +22,7 @@ namespace Makale.BusinessLayer
            BusinessLayerResult<User> res = new BusinessLayerResult<User>();
 
 
-            if (user!=null)
+            if (user!=null) 
             {
                  if(user.Username == data.Username)
                 {

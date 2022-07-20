@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Makale.BusinessLayer
 {
-    public class NoteManager:ManagerBase<User>
+    public class NoteManager:ManagerBase<Note>
     {
 
     }

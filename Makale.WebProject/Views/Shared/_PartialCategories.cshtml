@@ -1,9 +1,9 @@
-﻿@using Makale.BusinessLayer
+﻿ @using Makale.BusinessLayer
 @using Makale.Entities
 
     @{
         CategoryManager categoryManager = new CategoryManager();
-        List<Category> liste=categoryManager.GetCategories();
+        List<Category> liste=categoryManager.List();
     }
 
     <p class="lead">Kategoriler</p>
