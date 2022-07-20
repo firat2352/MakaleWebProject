@@ -20,6 +20,15 @@ namespace Makale.DataAccessLayer.EF
         {
             Database.SetInitializer(new MyInitializer());
         }
-     
+
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+
+        //    modelBuilder.Entity<Note>().HasMany(n => n.Comments).WithRequired(c => c.Note).WillCascadeOnDelete(true);
+
+        //    modelBuilder.Entity<Note>().HasMany(n => n.Likes).WithRequired(c => c.Note).WillCascadeOnDelete(true);
+
+
+        //}
     }
 }
