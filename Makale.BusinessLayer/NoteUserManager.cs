@@ -163,7 +163,7 @@ namespace Makale.BusinessLayer
                 res.Result.ProfileImageFileName = data.ProfileImageFileName;
             }
 
-            if (Update(res.Result) == 0)
+            if (base.Update(res.Result) == 0)
             {
                 res.AddError(ErrorMessagesCode.ProfileCouldNotUpdated, "Profil güncellenemedi.");
             }
@@ -220,6 +220,43 @@ namespace Makale.BusinessLayer
                 {
                     res.AddError(ErrorMessagesCode.UserCouldNotInserted, "Kullanıcı eklenemedi.");
                 }
+            }
+
+            return res;
+        }
+        public new BusinessLayerResult<User> Update(User data)
+        {
+            User db_user = Find(x => x.Username == data.Username || x.Email == data.Email);
+            BusinessLayerResult<User> res = new BusinessLayerResult<User>();
+            res.Result = data;
+
+            if (db_user != null && db_user.Id != data.Id)
+            {
+                if (db_user.Username == data.Username)
+                {
+                    res.AddError(ErrorMessagesCode.UsernameAlreadyExists, "Kullanıcı adı kayıtlı.");
+                }
+
+                if (db_user.Email == data.Email)
+                {
+                    res.AddError(ErrorMessagesCode.EmailAlreadyExists, "E-posta adresi kayıtlı.");
+                }
+
+                return res;
+            }
+
+            res.Result = Find(x => x.Id == data.Id);
+            res.Result.Email = data.Email;
+            res.Result.Name = data.Name;
+            res.Result.Surname = data.Surname;
+            res.Result.Password = data.Password;
+            res.Result.Username = data.Username;
+            res.Result.IsActive = data.IsActive;
+            res.Result.IsAdmin = data.IsAdmin;
+
+            if (base.Update(res.Result) == 0)
+            {
+                res.AddError(ErrorMessagesCode.UserCouldNotUpdated, "Kullanıcı güncellenemedi.");
             }
 
             return res;

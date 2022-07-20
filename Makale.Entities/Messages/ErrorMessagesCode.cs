@@ -16,5 +16,6 @@ namespace Makale.Entities.Messages
         UserCouldNotRemove = 158,
         UserCouldNotFind = 159,
         UserCouldNotInserted = 160,
+        UserCouldNotUpdated = 161,
     }
 }

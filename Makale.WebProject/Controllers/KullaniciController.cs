@@ -95,8 +95,13 @@ namespace Makale.WebProject.Controllers
 
             if (ModelState.IsValid)
             {
-         
-                //TODO
+                BusinessLayerResult<User> res = _noteUserManager.Update(user);
+
+                if (res.Errors.Count > 0)
+                {
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+                    return View(user);
+                }
                 return RedirectToAction("Index");
             }
             return View(user);
