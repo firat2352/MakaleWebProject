@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -8,124 +7,124 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Makale.BusinessLayer;
+using Makale.BusinessLayer.Result;
 using Makale.Entities;
 
 
 namespace Makale.WebProject.Controllers
 {
-    public class CategoriesController : Controller
+    public class KullaniciController : Controller
     {
-        private CategoryManager categoryManager = new CategoryManager();
+        private NoteUserManager _noteUserManager = new NoteUserManager();
 
         public ActionResult Index()
         {
-            return View(categoryManager.List());
+            return View(_noteUserManager.List());
         }
 
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = categoryManager.Find(x=>x.Id==id.Value);
-            if (category == null)
+            User user = _noteUserManager.Find(x=>x.Id==id.Value);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(user);
         }
 
+        
         public ActionResult Create()
         {
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public ActionResult Create(User user)
         {
+
             ModelState.Remove("CreatedOn");
             ModelState.Remove("ModifiedOn");
             ModelState.Remove("ModifiedUsername");
 
             if (ModelState.IsValid)
             {
-                categoryManager.Insert(category);
+                BusinessLayerResult<User> res = _noteUserManager.Insert(user);
+
+                if(res.Errors.Count>0)
+                {
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+                    return View(user);
+                }
 
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(user);
         }
 
         public ActionResult Edit(int? id)
         {
-          
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = categoryManager.Find(x => x.Id == id.Value);    
-
-            if (category == null)
+            User user = _noteUserManager.Find(x => x.Id == id.Value);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(user);
         }
 
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Category category)
+        public ActionResult Edit(User user)
         {
+
             ModelState.Remove("CreatedOn");
             ModelState.Remove("ModifiedOn");
             ModelState.Remove("ModifiedUsername");
 
             if (ModelState.IsValid)
             {
-                Category category1 = categoryManager.Find(x => x.Id == category.Id);
-                category1.Title = category.Title;
-                category1.Description = category.Description;
-
-                categoryManager.Update(category1);
-
+         
+                //TODO
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(user);
         }
 
-       
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = categoryManager.Find(x => x.Id == id.Value);
-            if (category == null)
+            User user = _noteUserManager.Find(x => x.Id == id.Value);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(user);
         }
 
-       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = categoryManager.Find(x => x.Id == id);
-            categoryManager.Delete(category);
-
-            
+            User user = _noteUserManager.Find(x => x.Id == id);
+            _noteUserManager.Delete(user);
 
             return RedirectToAction("Index");
         }
 
-       
     }
 }

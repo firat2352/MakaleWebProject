@@ -38,7 +38,7 @@ namespace Makale.BusinessLayer
 
             else
             {
-                int db_result=Insert(new User()
+                int db_result=base.Insert(new User()
                 {
                     Username = data.Username,
                     Email=data.Email,
@@ -191,5 +191,39 @@ namespace Makale.BusinessLayer
 
             return res;
         }
+
+        public new BusinessLayerResult<User> Insert(User data)
+        {
+            User user = Find(x => x.Username == data.Username || x.Email == data.Email);
+            BusinessLayerResult<User> res = new BusinessLayerResult<User>();
+
+            res.Result = data;
+
+            if (user != null)
+            {
+                if (user.Username == data.Username)
+                {
+                    res.AddError(ErrorMessagesCode.UsernameAlreadyExists, "Kullanıcı adı kayıtlı.");
+                }
+
+                if (user.Email == data.Email)
+                {
+                    res.AddError(ErrorMessagesCode.EmailAlreadyExists, "E-posta adresi kayıtlı.");
+                }
+            }
+            else
+            {
+                res.Result.ProfileImageFileName = "test-image.png";
+                res.Result.ActivateGuid = Guid.NewGuid();
+
+                if (base.Insert(res.Result) == 0)
+                {
+                    res.AddError(ErrorMessagesCode.UserCouldNotInserted, "Kullanıcı eklenemedi.");
+                }
+            }
+
+            return res;
+        }
+
     }
 }
