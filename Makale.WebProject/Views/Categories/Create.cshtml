@@ -1,4 +1,5 @@
 ﻿@model Makale.Entities.Category
+@using Makale.WebProject
 
 @{
     ViewBag.Title = "Create";
@@ -41,10 +42,10 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Create</button>
-                        
-                            @Html.ActionLink("Back to List","Index","Categories",null,new {@class="btn btn-default"})
-                       
+
+                        @_Bootstrap.Button("success", string.Empty, "submit", "plus", " Kaydet")
+                        @_Bootstrap.LinkButton("/Categories/Index", "default", string.Empty, string.Empty, "arrow-left", " Back to List")
+
                     </div>
                 </div>
             </div>

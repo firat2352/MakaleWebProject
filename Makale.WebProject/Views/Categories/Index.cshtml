@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Makale.Entities.Category>
+@using Makale.WebProject
 
 @{
     ViewBag.Title = "Kategoriler";
@@ -59,19 +60,13 @@
                         @Html.DisplayFor(modelItem => item.ModifiedUsername)
                     </td>
                     <td>
-                        <a href="/Categories/Edit/@item.Id" class="btn btn-warning btn-xs" title="Edit">
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </a>
+                        @_Bootstrap.LinkButton("/Categories/Edit/" + item.Id, "warning", "btn-xs", "Düzenle", "edit", string.Empty)
 
-                        <a href="/Categories/Details/@item.Id" class="btn btn-info  btn-xs" title="Details">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </a>
+                        @_Bootstrap.LinkButton("/Categories/Details/" + item.Id, "info", "btn-xs", "Detaylar", "search", string.Empty)
 
-                        <a href="/Categories/Delete/@item.Id" class="btn btn-danger  btn-xs" title="Delete">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>
+                        @_Bootstrap.LinkButton("/Categories/Delete/" + item.Id, "danger", "btn-xs", "Kaldır", "trash", string.Empty)
 
-                 
+
                     </td>
                 </tr>
             }

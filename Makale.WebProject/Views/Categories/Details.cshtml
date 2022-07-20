@@ -1,4 +1,5 @@
 ﻿@model Makale.Entities.Category
+@using Makale.WebProject
 
 @{
     ViewBag.Title = "Details";
@@ -62,16 +63,10 @@
 
     <div class="col-md-8 col-md-offset-2">
         <p>
-            <a href="/Categories/Edit/@Model.Id" class="btn btn-warning">
-                <span class="glyphicon glyphicon-edit"></span>Edit
-            </a>
-
-            <a href="/Categories/Index" class="btn btn-default">
-                <span class="glyphicon glyphicon-arrow-left"></span>Back To List
-            </a>
-    
+            @_Bootstrap.LinkButton("/Categories/Edit/" + Model.Id, "warning", string.Empty, string.Empty, "edit", " Düzenle")
+            @_Bootstrap.LinkButton("/Categories/Index", "default", string.Empty, string.Empty, "arrow-left", " Geri Dön!")
         </p>
 
     </div>
-   
+
 </div>
