@@ -53,7 +53,7 @@
 
                     @if (user != null)
                     {
-        <li class="dropdown">
+            <li class="dropdown">
             <a href="/Note/MyNotes" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon  glyphicon-wrench"></span> Yönetim <span class="caret"></span></a>
             <ul class="dropdown-menu">
 
@@ -65,11 +65,25 @@
                 @if (user.IsAdmin)
                 {
                     <li role="separator" class="divider"></li>
-                    <li><a href="/Categories/Create"><span class="glyphicon glyphicon-plus"></span>Kategori Ekle</a></li>
-                    <li><a href="/Categories/Index"><span class="glyphicon glyphicon-th-list"></span>Kategoriler</a></li>}
+                                    <li>
+                                        @_Bootstrap.LinkMenu("/Categories/Create", "plus", " Kategori Ekle")
+                                    </li>
+                                    <li>
+                                        @_Bootstrap.LinkMenu("/Categories/Index", "th-list", " Kategoriler")
+                                    </li>
+
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        @_Bootstrap.LinkMenu("/Kullanici/Create", "plus", " Kullanıcı Ekle")
+                                    </li>
+                                    <li>
+                                        @_Bootstrap.LinkMenu("/Kullanici/Index", "th-list", " Kullanıcılar")
+                                    </li>
+                }
 
                 </ul>
-        </li>}
+                </li>
+                }
 
                     <li>
                         <a href="/Home/MostLiked"><span class="glyphicon  glyphicon-heart"></span> En Beğenilenler</a>
