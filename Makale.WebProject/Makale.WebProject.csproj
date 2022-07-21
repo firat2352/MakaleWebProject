@@ -133,6 +133,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KullaniciController.cs" />
     <Compile Include="Controllers\NotController.cs" />
+    <Compile Include="Controllers\YorumController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -176,6 +177,7 @@
     <Content Include="Views\Not\Details.cshtml" />
     <Content Include="Views\Not\Edit.cshtml" />
     <Content Include="Views\Not\Index.cshtml" />
+    <Content Include="Views\Shared\_PartialComments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -185,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Yorum\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Makale.BusinessLayer\Makale.BusinessLayer.csproj">

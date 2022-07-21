@@ -1,5 +1,5 @@
 ﻿@using Makale.Entities
-@model List<Note>
+@model  List<Note>
 
 @{
     ViewBag.Title = "Index";
@@ -87,7 +87,7 @@
                             </div>
                             <div class="ratings">
                                 <p class="pull-right">
-                                    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal_comment" >
+                                    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal_comment" data-note-id="@note.Id">
                                         <span class="glyphicon glyphicon-comment"></span> Yorumlar
                                     </button>
                                 </p>
@@ -114,3 +114,19 @@
 
 @_Bootstrap.ModalPopup("modal_comment", "Yorumlar")
 @_Bootstrap.ModalPopup("modal_notedetail","Not Detayı")
+
+<script>
+
+    $(function () {
+
+        $('#modal_comment').on('show.bs.modal', function (e) {
+
+            var btn = $(e.relatedTarget);
+            noteid = btn.data("note-id");
+
+            $(modalCommentBodyId).load("/Yorum/ShowNoteComments/"+noteid);
+        })
+
+    });
+
+</script>
