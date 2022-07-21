@@ -1,5 +1,6 @@
 ﻿using Makale.Common;
 using Makale.Entities;
+using Makale.WebProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,12 @@ namespace Makale.WebProject.Init
 
         public string GetCurrentUserName()
         {
-           if(HttpContext.Current.Session["login"] !=null)
-            {
-                User user = HttpContext.Current.Session["login"] as User;
-                return user.Username;
-            }
+            User user = CurrentSession.User;
 
-            return "system";
+            if (user != null)
+                return user.Username;
+            else
+                return "system";
         }
     }
 }

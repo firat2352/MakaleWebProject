@@ -3,6 +3,7 @@ using Makale.BusinessLayer.Result;
 using Makale.Entities;
 using Makale.Entities.Messages;
 using Makale.Entities.ValueObjects;
+using Makale.WebProject.Models;
 using Makale.WebProject.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,7 @@ namespace Makale.WebProject.Controllers
                     return View(loginViewModel);
                 }
 
-                Session["login"] = businessLayerResult.Result;
+                CurrentSession.Set<User>("Login",businessLayerResult.Result);
                 return RedirectToAction("Index");
 
             }
@@ -152,9 +153,9 @@ namespace Makale.WebProject.Controllers
 
         public ActionResult ShowProfile()
         {
-            User currentUser = Session["login"] as User;
+           
           
-            BusinessLayerResult<User> res = noteUserManager.GetUserByID(currentUser.Id);
+            BusinessLayerResult<User> res = noteUserManager.GetUserByID(CurrentSession.User.Id);
 
             if (res.Errors.Count > 0)
             {
@@ -173,9 +174,9 @@ namespace Makale.WebProject.Controllers
         public ActionResult EditProfile()
 
         {
-            User currentUser = Session["login"] as User;
+         
            
-            BusinessLayerResult<User> res = noteUserManager.GetUserByID(currentUser.Id);
+            BusinessLayerResult<User> res = noteUserManager.GetUserByID(CurrentSession.User.Id);
 
             if (res.Errors.Count > 0)
             {
@@ -224,7 +225,7 @@ namespace Makale.WebProject.Controllers
                 }
 
 
-                Session["login"] = res.Result;
+                CurrentSession.Set<User>("Login",res.Result);
 
                 return RedirectToAction("ShowProfile");
             }
@@ -233,10 +234,9 @@ namespace Makale.WebProject.Controllers
         }
         public ActionResult DeleteProfile(User user)
         {
-            User currentUser = Session["login"] as User;
 
             
-            BusinessLayerResult<User> res = noteUserManager.RemoveUserById(currentUser.Id);
+            BusinessLayerResult<User> res = noteUserManager.RemoveUserById(CurrentSession.User.Id);
 
             if (res.Errors.Count > 0)
             {

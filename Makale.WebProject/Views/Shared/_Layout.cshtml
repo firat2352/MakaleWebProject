@@ -1,5 +1,6 @@
 ﻿@using Makale.Entities
 @using Makale.WebProject
+@using Makale.WebProject.Models
 
 
 <!DOCTYPE html>
@@ -27,12 +28,7 @@
 </head>
 <body>
 
-    @{ User user = null;
-
-        if (Session["login"] != null)
-        {
-            user = Session["login"] as User;
-        } }
+  
 
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -51,18 +47,18 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
 
-                    @if (user != null)
+                    @if (CurrentSession.User != null)
                     {
             <li class="dropdown">
             <a href="/Note/MyNotes" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon  glyphicon-wrench"></span> Yönetim <span class="caret"></span></a>
             <ul class="dropdown-menu">
 
-                <li><a href="/Note/AddNew"><span class="glyphicon glyphicon-plus"></span>Not Ekle</a></li>
+                <li><a href="/Not/Create"><span class="glyphicon glyphicon-plus"></span>Not Ekle</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="/Note/MyLikedNotes"><span class="glyphicon glyphicon-th-list"></span>Notlarım</a></li>
-                <li><a href="/Note/MyLikedNotes"><span class="glyphicon glyphicon-heart"></span>Beğendiklerim</a></li>
+                <li><a href="/Not/Index"><span class="glyphicon glyphicon-th-list"></span>Notlarım</a></li>
+                <li><a href="/Not/MyLikedNotes"><span class="glyphicon glyphicon-heart"></span>Beğendiklerim</a></li>
 
-                @if (user.IsAdmin)
+                @if (CurrentSession.User.IsAdmin)
                 {
                     <li role="separator" class="divider"></li>
                                     <li>
@@ -98,7 +94,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
-                    @if (user == null)
+                    @if (CurrentSession.User == null)
                     {
                         <li>
                     <a href="/Home/Login"><span class="glyphicon glyphicon-log-in"></span> Giriş</a>
@@ -113,7 +109,7 @@
                      {
 
                         <li>
-                            <a href="/Home/ShowProfile"><span class="glyphicon glyphicon-user"></span> @user.Username</a>
+                            <a href="/Home/ShowProfile"><span class="glyphicon glyphicon-user"></span> @CurrentSession.User.Username</a>
                         </li>
                          <li>
                              <a href="/Home/Logout"><span class="glyphicon glyphicon-log-out"></span> Çıkış</a>

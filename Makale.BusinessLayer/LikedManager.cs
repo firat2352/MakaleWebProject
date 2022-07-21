@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Makale.BusinessLayer
 {
-    class LikedManager: ManagerBase<Liked>
+    public class LikedManager: ManagerBase<Liked>
     {
     }
 }
