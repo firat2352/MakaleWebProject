@@ -23,7 +23,7 @@ namespace Makale.WebProject.Controllers
         public ActionResult Index()
         {
 
-            return View(noteManager.ListQueryable().OrderByDescending(x => x.ModifiedOn).ToList());
+            return View(noteManager.ListQueryable().Where(x=>x.IsDraft==false).OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
         public ActionResult ByCategory(int? id)
@@ -41,7 +41,7 @@ namespace Makale.WebProject.Controllers
                 return HttpNotFound();
             }
 
-            return View("Index", category.Notes.OrderByDescending(x => x.ModifiedOn).ToList());
+            return View("Index", category.Notes.Where(x => x.IsDraft == false).OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
         public ActionResult MostLiked()
