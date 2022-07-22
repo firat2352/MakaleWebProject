@@ -38,38 +38,47 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Text)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDraft)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LikeCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedUsername)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDraft)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikeCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedUsername)
+            </td>
+            <td width="150">
+                <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal_comment" data-note-id="@item.Id">
+                    <span class="glyphicon glyphicon-comment"></span>
+                </button>
+
+                @Html.ActionLink("Düzenle", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Detay", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Sil", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>
+
+@_Bootstrap.ModalPopup(id: "modal_comment", title: "Yorumlar")
+
+<script src="~/Scripts/comment.js"></script>
