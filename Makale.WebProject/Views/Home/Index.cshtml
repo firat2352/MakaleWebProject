@@ -52,11 +52,11 @@
                             <div class="caption">
 
 
-                                <h4>
-                                    <a href="#">
+                                <h5>
+                                    <a href="#" data-toggle="modal" data-target="#modal_notedetail" data-note-id="@note.Id">
                                         @note.Title
                                     </a>
-                                </h4>
+                                </h5>
 
 
                                 @if (string.IsNullOrEmpty(note.Text) == false && note.Text.Length > 70)
@@ -122,3 +122,5 @@
 <script src="~/Scripts/comment.js"></script>
 
 <script src="~/Scripts/like.js"></script>
+
+<script src="~/Scripts/NotDetailPopup.js"></script>
