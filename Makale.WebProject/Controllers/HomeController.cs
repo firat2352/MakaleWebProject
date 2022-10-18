@@ -48,7 +48,7 @@ namespace Makale.WebProject.Controllers
         {
           
 
-            return View("Index", noteManager.ListQueryable().OrderByDescending(n => n.Likes).ToList());
+            return View("Index", noteManager.ListQueryable().OrderByDescending(n => n.LikeCount).ToList());
         }
 
         public ActionResult About()
