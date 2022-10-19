@@ -52,7 +52,7 @@ namespace Makale.DataAccessLayer.EF
                 EntityBase o = obj as EntityBase;
 
                 o.ModifiedOn = DateTime.Now;
-                o.ModifiedUsername = "system";
+                o.ModifiedUsername = App.Common.GetCurrentUserName();
             }
             return Save();
         }
